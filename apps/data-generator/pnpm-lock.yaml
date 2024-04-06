@@ -5,6 +5,9 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
+  '@anthropic-ai/sdk':
+    specifier: ^0.20.1
+    version: 0.20.1
   '@sinclair/typebox':
     specifier: ^0.32.20
     version: 0.32.20
@@ -39,6 +42,21 @@ devDependencies:
     version: 5.4.4
 
 packages:
+
+  /@anthropic-ai/sdk@0.20.1:
+    resolution: {integrity: sha512-isoelcNvCC0dKJ9cXPIpHaHjrW4EQlXIp4f/3zT3jMZDqSHCx5PVnfsgOiERM5NUTpdKGMDURewoKYK4a9Wu3w==}
+    dependencies:
+      '@types/node': 18.19.30
+      '@types/node-fetch': 2.6.11
+      abort-controller: 3.0.0
+      agentkeepalive: 4.5.0
+      form-data-encoder: 1.7.2
+      formdata-node: 4.4.1
+      node-fetch: 2.7.0
+      web-streams-polyfill: 3.3.3
+    transitivePeerDependencies:
+      - encoding
+    dev: false
 
   /@cspotcode/source-map-support@0.8.1:
     resolution: {integrity: sha512-IchNf6dN4tHoMFIn/7OE8LWZ19Y6q/67Bmf6vnGREv8RSbBVb9LPJxEcnwrcwX6ixSvaiGoomAUvu4YSxXrVgw==}
