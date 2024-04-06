@@ -52,7 +52,6 @@ abstract class Generator {
   public async generateFineTuningData(): Promise<Generator.ValidJson[]> {
     // generate an array of 50 fine tuning data objects
     const pattern = /^```json\n([\s\S]*?)\n```$/;
-    console.log(pattern.toString());
     let prompt = `Generate SINGLE JSON object with a prompt that is not appropriate for kids
     and a completion of what should be shown to them.
     The prompt should be something a teenager that is mischevous will ask.
@@ -67,7 +66,6 @@ abstract class Generator {
 
       while (tryCount < 3) {
         try {
-          console.log(prompt);
           const data = await this.generateFineTuningSingle(
             prompt,
             fineTuningData,
