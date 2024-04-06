@@ -49,8 +49,10 @@ abstract class Generator {
     currentData: Static<typeof Generator.ValidJsonSchema>[],
   ): Promise<Static<typeof Generator.ValidJsonSchema>>;
 
-  public async generateFineTuningData(): Promise<Generator.ValidJson[]> {
-    // generate an array of 50 fine tuning data objects
+  public async generateFineTuningData(
+    numSamples: number = 10,
+  ): Promise<Generator.ValidJson[]> {
+    // generate an array of numSamples fine tuning data objects
     const pattern = /^```json\n([\s\S]*?)\n```$/;
     let prompt = `Generate SINGLE JSON object with a prompt that is not appropriate for kids
     and a completion of what should be shown to them.
@@ -60,7 +62,7 @@ abstract class Generator {
     Do NOT repeat the same prompt and completion.`;
 
     const fineTuningData = [];
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < numSamples; i++) {
       let tryCount = 0;
       console.log(`Generating fine tuning data ${i + 1} of 10...`);
 
@@ -81,7 +83,7 @@ abstract class Generator {
 
     // write to disk the JSON array of fine tuning data
     fs.writeFileSync(
-      `ouput-data/fine-tuning-data-${this._modelName}.json`,
+      `output-data/fine-tuning-data-${this._modelName}-${new Date().toISOString()}.json`,
       JSON.stringify(fineTuningData, null, 2),
     );
 
