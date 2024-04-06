@@ -81,7 +81,7 @@ abstract class Generator {
 
     // write to disk the JSON array of fine tuning data
     fs.writeFileSync(
-      `fine-tuning-data-${this._modelName}.json`,
+      `ouput-data/fine-tuning-data-${this._modelName}.json`,
       JSON.stringify(fineTuningData, null, 2),
     );
 
