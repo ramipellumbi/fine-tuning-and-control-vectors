@@ -1,15 +1,32 @@
 import streamlit as st
-from llm_handler import create_chain
+from llm_chain import LlmChain, MistralLlm
 
 st.set_page_config(page_title="Ed")
 st.header("Unlock your learning potential with Ed!")
 
-system_prompt = st.text_area(
-    label="System Prompt",
-    value="",
-    key="system_prompt")
+# Use containers and columns to better organize the layout
+with st.container():
+    st.subheader("Configuration")
+    col1, col2 = st.columns(2)
 
-llm_chain = create_chain(system_prompt, st)
+    with col1:
+        system_prompt = st.text_area(
+            label="System Prompt",
+            value="",
+            key="system_prompt",
+            height=150,
+            help="This is the initial text that sets up the context for the model."
+        )
+
+    with col2:
+        model_opt = st.radio(
+           label="Model Selection",
+           options=["Base", "Fine Tuned"],
+           help="Select the model to use.")
+
+model_path = None if model_opt == "Base" else model_opt  # TODO: replace with real path heree
+model = MistralLlm(model_path)
+chain = LlmChain(system_prompt, model)
 
 if "messages" not in st.session_state:
     st.session_state.messages = [{
@@ -33,7 +50,7 @@ if user_prompt := st.chat_input("Your message here", key="user_input"):
         st.markdown(user_prompt)
 
     with st.chat_message("assistant"):
-        stream = llm_chain.stream({"question": user_prompt})
+        stream = chain.generate(user_prompt)
         response = st.write_stream(stream)
     st.session_state.messages.append({
         "role": "assistant",
