@@ -1,0 +1,4 @@
+langchain==0.1.16
+lama_cpp_python==0.2.61
+streamlit==1.32.0
+huggingface_hub==0.20.3
