@@ -9,14 +9,13 @@ system_prompt = st.text_area(
     value="",
     key="system_prompt")
 
-@st.cache_resource
-def gen_chain():
-    return create_chain(system_prompt)
-
-llm_chain = gen_chain()
+llm_chain = create_chain(system_prompt, st)
 
 if "messages" not in st.session_state:
-    st.session_state.messages = [{"role": "assistant", "content": "How may I help you today?"}]
+    st.session_state.messages = [{
+        "role": "assistant",
+        "content": "How may I help you today?"
+    }]
 
 if "current_response" not in st.session_state:
     st.session_state.current_response = ""
@@ -26,7 +25,18 @@ for message in st.session_state.messages:
         st.markdown(message["content"])
 
 if user_prompt := st.chat_input("Your message here", key="user_input"):
-    st.session_state.messages.append({"role": "user", "content": user_prompt})
+    st.session_state.messages.append({
+        "role": "user",
+        "content": user_prompt
+    })
+    with st.chat_message("user"):
+        st.markdown(user_prompt)
+
     response = llm_chain.invoke({"question": user_prompt})
-    print(response)
-    st.session_state.messages.append({"role": "assistant", "content": response})
+    st.session_state.messages.append({
+        "role": "assistant",
+        "content": response
+    })
+
+    with st.chat_message("assistant"):
+        st.markdown(response)
