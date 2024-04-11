@@ -2,7 +2,6 @@ from langchain_core.callbacks import CallbackManager
 from langchain_community.llms import LlamaCpp
 from langchain.prompts import PromptTemplate
 from huggingface_hub import hf_hub_download
-from stream_handler import StreamHandler
 
 def create_chain(system_prompt, st):
     repo_id, model_file_name = ("TheBloke/Mistral-7B-Instruct-v0.1-GGUF",
@@ -23,7 +22,6 @@ def create_chain(system_prompt, st):
         n_batch=512,
         f16_kv=True,
         verbose=True,
-        callback_manager=CallbackManager([StreamHandler(st.empty())])
     )
 
     template = """

@@ -32,11 +32,10 @@ if user_prompt := st.chat_input("Your message here", key="user_input"):
     with st.chat_message("user"):
         st.markdown(user_prompt)
 
-    response = llm_chain.invoke({"question": user_prompt})
+    with st.chat_message("assistant"):
+        stream = llm_chain.stream({"question": user_prompt})
+        response = st.write_stream(stream)
     st.session_state.messages.append({
         "role": "assistant",
-        "content": response
+        "content": str(response)
     })
-
-    with st.chat_message("assistant"):
-        st.markdown(response)
