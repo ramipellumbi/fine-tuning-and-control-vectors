@@ -1,6 +1,11 @@
-import streamlit as st
 from typing import Optional
-from llm_chain import LlmChain, MistralLlm
+
+import streamlit as st
+
+from llm_chain import LlmChain
+from llama_llm import LlamaLLM
+from mistral_llm import MistralLLM
+
 
 st.set_page_config(page_title="Ed")
 st.header("Unlock your learning potential with Ed!")
@@ -12,13 +17,17 @@ def get_model_path_from_option(option: Optional[str]):
 
     if option == "Fine Tuned":
         # TODO
-        return "path/to/fine_tuned_model"
+        return None
+
+    if option == "Control Vector":
+        # TODO
+        return None
 
 
 # Use containers and columns to better organize the layout
 with st.container():
     st.subheader("Configuration")
-    col1, col2 = st.columns(2)
+    col1, col2, col3 = st.columns(3)
 
     with col1:
         system_prompt = st.text_area(
@@ -32,12 +41,20 @@ with st.container():
     with col2:
         model_opt = st.radio(
             label="Model Selection",
-            options=["Base", "Fine Tuned"],
+            options=["Base", "Fine Tuned", "Fine Tuned & Control Vector"],
             help="Select the model to use.",
         )
 
+    with col3:
+        model_type = st.radio(
+            label="Model Type",
+            options=["Llama", "Mistral"],
+            help="Select the model type to use.",
+        )
+
+
 model_path = get_model_path_from_option(model_opt)
-model = MistralLlm(model_path)
+model = LlamaLLM(model_path) if model_type == "Llama" else MistralLLM(model_path)
 chain = LlmChain(system_prompt, model)
 
 if "messages" not in st.session_state:
