@@ -11,7 +11,7 @@ st.set_page_config(page_title="Ed")
 st.header("Unlock your learning potential with Ed!")
 
 
-def get_model_path_from_option(option: Optional[str]):
+def get_model_path_from_option(option: Optional[str]) -> Optional[str]:
     if not option or option == "Base":
         return None
 
@@ -22,6 +22,19 @@ def get_model_path_from_option(option: Optional[str]):
     if option == "Control Vector":
         # TODO
         return None
+
+
+def get_model_from_option(model_path: Optional[str], model_option: Optional[str]):
+    if not model_option:
+        raise ValueError("Model option must be provided.")
+
+    if model_option == "Llama":
+        return LlamaLLM(model_path)
+
+    if model_option == "Mistral":
+        return MistralLLM(model_path)
+
+    raise ValueError("Invalid model option.")
 
 
 # Use containers and columns to better organize the layout
@@ -54,7 +67,7 @@ with st.container():
 
 
 model_path = get_model_path_from_option(model_opt)
-model = LlamaLLM(model_path) if model_type == "Llama" else MistralLLM(model_path)
+model = get_model_from_option(model_path, model_type)
 chain = LlmChain(system_prompt, model)
 
 if "messages" not in st.session_state:
