@@ -1,13 +1,7 @@
 # Running the Streamer
 
 1. Install all the packages in `requirements.txt`.
-2. Run `streamlit main.py` to run the base Mistral.
-
-```
-streamlit main.py
-```
-
-from the `src/` directory.
+2. Run `streamlit main.py`.
 
 # Example Adversarial Query
 
