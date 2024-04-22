@@ -5,25 +5,11 @@ from typing import Optional
 
 import streamlit as st
 
-from chains import ChainFactory
 from enums import Models, ModelTypes
-from models import ModelFactory
+from setup import get_chain_from_option
 
 # Add the parent directory to the sys path to import from packages
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
-
-def get_model_path_from_option(option: ModelTypes) -> Optional[str]:
-    if option == ModelTypes.BASE:
-        return None
-
-    if option == ModelTypes.FINE_TUNED:
-        # TODO
-        return None
-
-    if option == ModelTypes.FINE_TUNED_AND_CV:
-        # TODO
-        return None
 
 
 st.set_page_config(page_title="Ed")
@@ -66,9 +52,7 @@ with st.container():
             raise ValueError("Model type must be provided.")
         model_type = ModelTypes[model_type_name]
 
-model_path = get_model_path_from_option(model_type)
-model_factory = ModelFactory(model_path)
-chain = ChainFactory(system_prompt, model_factory).create_chain(model)
+chain = get_chain_from_option(system_prompt, model, model_type)
 
 if "messages" not in st.session_state:
     st.session_state.messages = [
