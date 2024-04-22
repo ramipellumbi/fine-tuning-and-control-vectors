@@ -1,40 +1,33 @@
+import os
+import sys
+from enum import Enum
 from typing import Optional
 
 import streamlit as st
 
-from llm_chain import LlmChain
-from llama_llm import LlamaLLM
-from mistral_llm import MistralLLM
+from chains import ChainFactory
+from enums import Models, ModelTypes
+from models import ModelFactory
+
+# Add the parent directory to the sys path to import from packages
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+
+def get_model_path_from_option(option: ModelTypes) -> Optional[str]:
+    if option == ModelTypes.BASE:
+        return None
+
+    if option == ModelTypes.FINE_TUNED:
+        # TODO
+        return None
+
+    if option == ModelTypes.FINE_TUNED_AND_CV:
+        # TODO
+        return None
 
 
 st.set_page_config(page_title="Ed")
 st.header("Unlock your learning potential with Ed!")
-
-
-def get_model_path_from_option(option: Optional[str]) -> Optional[str]:
-    if not option or option == "Base":
-        return None
-
-    if option == "Fine Tuned":
-        # TODO
-        return None
-
-    if option == "Control Vector":
-        # TODO
-        return None
-
-
-def get_model_from_option(model_path: Optional[str], model_option: Optional[str]):
-    if not model_option:
-        raise ValueError("Model option must be provided.")
-
-    if model_option == "Llama":
-        return LlamaLLM(model_path)
-
-    if model_option == "Mistral":
-        return MistralLLM(model_path)
-
-    raise ValueError("Invalid model option.")
 
 
 # Use containers and columns to better organize the layout
@@ -47,28 +40,35 @@ with st.container():
             label="System Prompt",
             value="",
             key="system_prompt",
-            height=150,
+            height=100,
             help="This is the initial text that sets up the context for the model.",
         )
 
     with col2:
-        model_opt = st.radio(
+        model_name = st.radio(
             label="Model Selection",
-            options=["Base", "Fine Tuned", "Fine Tuned & Control Vector"],
+            options=[opt.name for opt in Models],
+            format_func=lambda x: Models[x].value,
             help="Select the model to use.",
         )
+        if not model_name:
+            raise ValueError("Model option must be provided.")
+        model = Models[model_name]
 
     with col3:
-        model_type = st.radio(
+        model_type_name = st.radio(
             label="Model Type",
-            options=["Llama", "Mistral"],
+            options=[opt.name for opt in ModelTypes],
+            format_func=lambda x: ModelTypes[x].value,
             help="Select the model type to use.",
         )
+        if not model_type_name:
+            raise ValueError("Model type must be provided.")
+        model_type = ModelTypes[model_type_name]
 
-
-model_path = get_model_path_from_option(model_opt)
-model = get_model_from_option(model_path, model_type)
-chain = LlmChain(system_prompt, model)
+model_path = get_model_path_from_option(model_type)
+model_factory = ModelFactory(model_path)
+chain = ChainFactory(system_prompt, model_factory).create_chain(model)
 
 if "messages" not in st.session_state:
     st.session_state.messages = [
