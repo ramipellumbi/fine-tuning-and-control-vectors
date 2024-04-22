@@ -54,29 +54,25 @@ with st.container():
 
 chain = get_chain_from_option(system_prompt, model, model_type)
 
-if "messages" not in st.session_state:
-    st.session_state.messages = []
-
+if "messages" not in st.session_state.keys():
     st.session_state.messages = [
-        {"role": "assistant", "content": "How may I help you today?"}
+        {"role": "assistant", "content": "Hello! How can I help you today?"}
     ]
+
+if prompt := st.chat_input("Your query", key="user_input"):
+    st.session_state.messages.append({"role": "user", "content": prompt})
+    conversation.add_message({"role": "user", "content": prompt})
 
 for message in st.session_state.messages:
     with st.chat_message(message["role"]):
-        st.markdown(message["content"])
+        st.write(message["content"])
 
-if user_prompt := st.chat_input("Your message here", key="user_input"):
-    # add user prompt to the chat history
-    st.session_state.messages.append({"role": "user", "content": user_prompt})
-    conversation.add_message({"role": "user", "content": user_prompt})
+if st.session_state.messages[-1]["role"] != "assistant":
     full_prompt = conversation.generate_prompt()
-
-    with st.chat_message("user"):
-        st.markdown(user_prompt)
-
     with st.chat_message("assistant"):
         stream = chain.generate(full_prompt)
         response = st.write_stream(stream)
-
-    st.session_state.messages.append({"role": "assistant", "content": str(response)})
-    conversation.add_message({"role": "assistant", "content": str(response)})
+        st.session_state.messages.append(
+            {"role": "assistant", "content": str(response)}
+        )
+        conversation.add_message({"role": "assistant", "content": str(response)})
