@@ -1,8 +1,8 @@
-from typing import Dict, List
+from typing import Dict, List, Optional
 
 
 class Conversation:
-    def __init__(self, context_length: int = 4):
+    def __init__(self, context_length: Optional[int] = None):
         self._messages: List[Dict[str, str]] = []
         self._context_length = context_length
 
@@ -18,20 +18,13 @@ class Conversation:
         self._messages.append(message)
 
         print(f"Added message: {message}")
-        print(f"Current messages in history: {self._messages[-self._context_length:]}")
+        print(f"Current messages in history: {self.get_messages()}")
 
-    def generate_prompt(
-        self,
-    ):
-        # get the current message history
-        message_history = "\n".join(
-            [
-                f"{message['role']}: {message['content']}"
-                for message in self._messages[-self._context_length :]
-            ]
-        )
+    def get_messages(self):
+        if self._context_length is None:
+            return self._messages
 
-        return message_history
+        return self._messages[-self._context_length :]
 
 
 conversation = Conversation()

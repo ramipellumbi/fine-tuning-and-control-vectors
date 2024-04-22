@@ -1,6 +1,8 @@
 from langchain_community.llms import LlamaCpp
 from huggingface_hub import hf_hub_download
 
+from llama_cpp import Llama
+
 
 class BaseModel:
     def __init__(self, **kwargs):
@@ -12,8 +14,17 @@ class BaseModel:
             raise ValueError("model_file_name is required")
         if "stop_token" not in kwargs:
             raise ValueError("stop_token is required")
+        if "chat_format" not in kwargs:
+            raise ValueError("chat_format is required")
+
+        chat_format = kwargs["chat_format"]
+        assert chat_format in [
+            "mistral-instruct",
+            "llama-3",
+        ], "chat_format must be one of 'mistral-instruct' or 'llama-3'"
 
         model_path = kwargs["model_path"]
+
         if model_path is None:
             repo_id = kwargs["repo_id"]
             model_file_name = kwargs["model_file_name"]
@@ -31,19 +42,16 @@ class BaseModel:
 
         stop_token = kwargs["stop_token"]
 
-        self._llm = LlamaCpp(
+        self._llm = Llama(
             model_path=model_path,
-            temperature=0,
+            chat_format=chat_format,
+            stream=True,
+            n_gpu_layers=-1,
             n_ctx=4096,
-            max_tokens=2048,
-            top_p=1,
-            stop=stop_token,
-            n_gqa=8,
-            streaming=True,
-            n_gpu_layers=1,
-            n_batch=512,
-            f16_kv=True,
             verbose=False,
+            temperature=0.9,
+            skip_special_tokens=True,
+            stop=stop_token,
         )
 
     @property

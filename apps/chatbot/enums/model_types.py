@@ -2,6 +2,6 @@ from enum import Enum
 
 
 class ModelTypes(Enum):
-    BASE: str = "Base"
-    FINE_TUNED: str = "Fine Tuned"
-    FINE_TUNED_AND_CV: str = "Fine Tuned & Control Vector"
+    BASE = "Base"
+    FINE_TUNED = "Fine Tuned"
+    FINE_TUNED_AND_CV = "Fine Tuned & Control Vector"

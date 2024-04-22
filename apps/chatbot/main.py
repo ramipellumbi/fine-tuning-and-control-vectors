@@ -68,7 +68,7 @@ for message in st.session_state.messages:
         st.write(message["content"])
 
 if st.session_state.messages[-1]["role"] != "assistant":
-    full_prompt = conversation.generate_prompt()
+    full_prompt = conversation.get_messages()
     with st.chat_message("assistant"):
         stream = chain.generate(full_prompt)
         response = st.write_stream(stream)

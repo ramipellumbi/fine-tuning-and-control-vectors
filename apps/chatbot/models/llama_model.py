@@ -8,6 +8,7 @@ class LlamaModel(BaseModel):
         kwargs = {}
 
         kwargs["model_path"] = model_path
+        kwargs["chat_format"] = "llama-3"
         kwargs["repo_id"] = "lmstudio-community/Meta-Llama-3-8B-Instruct-GGUF"
         kwargs["model_file_name"] = "Meta-Llama-3-8B-Instruct-Q8_0.gguf"
         kwargs["stop_token"] = ["<|eot_id|>"]
