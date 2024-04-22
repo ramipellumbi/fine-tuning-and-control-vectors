@@ -18,9 +18,7 @@ class Conversation:
         self._messages.append(message)
 
         print(f"Added message: {message}")
-        print(f"Current messages in history: {self._messages[
-            -self._context_length:
-        ]}")
+        print(f"Current messages in history: {self._messages[-self._context_length:]}")
 
     def generate_prompt(
         self,
