@@ -19,6 +19,6 @@ def get_model_path_from_option(option: ModelTypes) -> Optional[str]:
 
 def get_model_from_options(model_option: Models, path_option: ModelTypes):
     model_path = get_model_path_from_option(path_option)
-    model = ModelFactory(model_path).create_model(model_option)
+    model = ModelFactory.create_model(model_option, model_path)
 
     return model
