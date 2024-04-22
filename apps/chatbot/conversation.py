@@ -2,7 +2,7 @@ from typing import Dict, List
 
 
 class Conversation:
-    def __init__(self, context_length: int = 2):
+    def __init__(self, context_length: int = 4):
         self._messages: List[Dict[str, str]] = []
         self._context_length = context_length
 
@@ -23,9 +23,6 @@ class Conversation:
     def generate_prompt(
         self,
     ):
-        # generate a prompt that includes the current message history
-        # and then append the user's message with context
-
         # get the current message history
         message_history = "\n".join(
             [

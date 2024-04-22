@@ -12,8 +12,8 @@ class LlamaChain(BaseChain):
     def create_prompt(self, system_prompt: str):
         template = """
         <|start_header_id|>system<|end_header_id|>
-        {}<|eot_id|>\n\n<|start_header_id|>user<|end_header_id|>
-        {}<|eot_id|>\n\n<|start_header_id|>assistant<|end_header_id|>
+        {}<|eot_id|><|start_header_id|>user<|end_header_id|>
+        {}<|eot_id|><|start_header_id|>assistant<|end_header_id|>
         """.format(
             system_prompt, "{question}"
         )
