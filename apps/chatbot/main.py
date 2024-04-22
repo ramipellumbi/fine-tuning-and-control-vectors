@@ -7,7 +7,7 @@ import streamlit as st
 
 from conversation import conversation
 from enums import Models, ModelTypes
-from setup import get_chain_from_option
+from setup import get_model_from_options
 
 # Add the parent directory to the sys path to import from packages
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -52,7 +52,7 @@ with st.container():
             raise ValueError("Model type must be provided.")
         model_type = ModelTypes[model_type_name]
 
-chain = get_chain_from_option(system_prompt, model, model_type)
+model = get_model_from_options(model, model_type)
 
 if "messages" not in st.session_state.keys():
     st.session_state.messages = [
@@ -68,9 +68,9 @@ for message in st.session_state.messages:
         st.write(message["content"])
 
 if st.session_state.messages[-1]["role"] != "assistant":
-    full_prompt = conversation.get_messages()
+    messages = conversation.get_messages()
     with st.chat_message("assistant"):
-        stream = chain.generate(full_prompt)
+        stream = model.generate(system_prompt, messages)
         response = st.write_stream(stream)
         st.session_state.messages.append(
             {"role": "assistant", "content": str(response)}

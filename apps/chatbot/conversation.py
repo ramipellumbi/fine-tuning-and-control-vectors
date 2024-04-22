@@ -1,12 +1,14 @@
 from typing import Dict, List, Optional
 
+from llama_cpp import ChatCompletionRequestMessage
+
 
 class Conversation:
     def __init__(self, context_length: Optional[int] = None):
-        self._messages: List[Dict[str, str]] = []
+        self._messages: List[ChatCompletionRequestMessage] = []
         self._context_length = context_length
 
-    def add_message(self, message: Dict[str, str]):
+    def add_message(self, message: ChatCompletionRequestMessage):
         assert "role" in message, "Message must have a role."
         assert "content" in message, "Message must have content."
         assert message["role"] in [

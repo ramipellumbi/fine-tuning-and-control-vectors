@@ -1,4 +1,10 @@
-from llama_cpp import Llama
+from typing import Dict, Iterable, List
+
+from llama_cpp import (
+    ChatCompletionRequestMessage,
+    ChatCompletionRequestSystemMessage,
+    Llama,
+)
 from huggingface_hub import hf_hub_download
 
 
@@ -52,6 +58,27 @@ class BaseModel:
             stop=stop_token,
         )
 
-    @property
-    def llm(self):
-        return self._llm
+    def generate(
+        self, system_prompt: str, messages: List[ChatCompletionRequestMessage]
+    ):
+        messages_with_system_prompt = [
+            ChatCompletionRequestSystemMessage(
+                role="system",
+                content=system_prompt,
+            ),
+            *messages,
+        ]
+
+        completion = self._llm.create_chat_completion(
+            messages=messages_with_system_prompt,
+            stream=True,
+        )
+
+        if not isinstance(completion, Iterable):
+            raise ValueError("Completion is not iterable")
+
+        for chunk in completion:
+            assert isinstance(chunk, Dict)
+            delta = chunk["choices"][0]["delta"]
+            if "content" in delta:
+                yield delta["content"]
