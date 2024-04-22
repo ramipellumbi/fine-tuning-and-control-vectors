@@ -1,15 +1,8 @@
 # Running the Streamer
 
-Heavily inspired by: https://github.com/lalanikarim/ai-chatbot/tree/main
-
 1. Install all the packages in `requirements.txt`.
-2. Run `streamlit main.py` to run the base Mistral.
-
-```
-streamlit main.py
-```
-
-from the `src/` directory.
+2. (Optional, necessary for LLAMA 3 Support) Modify the `llama-cpp-python` installation to have the changes specified in [this PR](https://github.com/abetlen/llama-cpp-python/pull/1371).
+3. Run `streamlit main.py`.
 
 # Example Adversarial Query
 
