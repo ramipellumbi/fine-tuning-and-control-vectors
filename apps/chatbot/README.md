@@ -1,7 +1,5 @@
 # Running the Streamer
 
-Heavily inspired by: https://github.com/lalanikarim/ai-chatbot/tree/main
-
 1. Install all the packages in `requirements.txt`.
 2. Run `streamlit main.py` to run the base Mistral.
 
