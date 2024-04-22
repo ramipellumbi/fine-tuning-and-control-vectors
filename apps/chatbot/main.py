@@ -5,12 +5,12 @@ from typing import Optional
 
 import streamlit as st
 
+from conversation import conversation
 from enums import Models, ModelTypes
 from setup import get_chain_from_option
 
 # Add the parent directory to the sys path to import from packages
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
 
 st.set_page_config(page_title="Ed")
 st.header("Unlock your learning potential with Ed!")
@@ -55,23 +55,28 @@ with st.container():
 chain = get_chain_from_option(system_prompt, model, model_type)
 
 if "messages" not in st.session_state:
+    st.session_state.messages = []
+
     st.session_state.messages = [
         {"role": "assistant", "content": "How may I help you today?"}
     ]
-
-if "current_response" not in st.session_state:
-    st.session_state.current_response = ""
 
 for message in st.session_state.messages:
     with st.chat_message(message["role"]):
         st.markdown(message["content"])
 
 if user_prompt := st.chat_input("Your message here", key="user_input"):
+    # add user prompt to the chat history
     st.session_state.messages.append({"role": "user", "content": user_prompt})
+    conversation.add_message({"role": "user", "content": user_prompt})
+    full_prompt = conversation.generate_prompt()
+
     with st.chat_message("user"):
         st.markdown(user_prompt)
 
     with st.chat_message("assistant"):
-        stream = chain.generate(user_prompt)
+        stream = chain.generate(full_prompt)
         response = st.write_stream(stream)
+
     st.session_state.messages.append({"role": "assistant", "content": str(response)})
+    conversation.add_message({"role": "assistant", "content": str(response)})

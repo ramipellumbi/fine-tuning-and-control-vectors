@@ -34,7 +34,8 @@ class BaseModel:
         self._llm = LlamaCpp(
             model_path=model_path,
             temperature=0,
-            max_tokens=2048,
+            n_ctx=1024,
+            max_tokens=1024,
             top_p=1,
             stop=stop_token,
             n_gqa=8,
@@ -42,7 +43,7 @@ class BaseModel:
             n_gpu_layers=1,
             n_batch=512,
             f16_kv=True,
-            verbose=True,
+            verbose=False,
         )
 
     @property
