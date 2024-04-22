@@ -1,7 +1,5 @@
-from langchain_community.llms import LlamaCpp
-from huggingface_hub import hf_hub_download
-
 from llama_cpp import Llama
+from huggingface_hub import hf_hub_download
 
 
 class BaseModel:
