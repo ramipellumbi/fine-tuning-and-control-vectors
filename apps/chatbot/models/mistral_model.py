@@ -13,3 +13,6 @@ class MistralModel(BaseModel):
         kwargs["model_file_name"] = "mistral-7b-instruct-v0.1.Q4_0.gguf"
         kwargs["stop_token"] = ["[INST]"]
         super().__init__(**kwargs)
+
+    def model_name(self) -> str:
+        return "mistral"

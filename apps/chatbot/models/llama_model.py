@@ -13,3 +13,6 @@ class LlamaModel(BaseModel):
         kwargs["model_file_name"] = "Meta-Llama-3-8B-Instruct-Q8_0.gguf"
         kwargs["stop_token"] = ["<|eot_id|>"]
         super().__init__(**kwargs)
+
+    def model_name(self) -> str:
+        return "llama 3"

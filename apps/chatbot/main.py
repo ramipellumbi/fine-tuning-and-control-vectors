@@ -70,6 +70,8 @@ for message in st.session_state.messages:
 if st.session_state.messages[-1]["role"] != "assistant":
     messages = conversation.get_messages()
     with st.chat_message("assistant"):
+        st.write(f"({model.model_name()})")
+
         stream = model.generate(system_prompt, messages)
         response = st.write_stream(stream)
         st.session_state.messages.append(

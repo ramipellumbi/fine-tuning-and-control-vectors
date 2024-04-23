@@ -1,3 +1,4 @@
+from abc import ABC, abstractmethod
 from typing import Dict, Iterable, List
 
 from llama_cpp import (
@@ -8,7 +9,7 @@ from llama_cpp import (
 from huggingface_hub import hf_hub_download
 
 
-class BaseModel:
+class BaseModel(ABC):
     def __init__(self, **kwargs):
         assert "model_path" in kwargs, "model_path is required"
         assert "chat_format" in kwargs, "chat_format is required"
@@ -52,6 +53,12 @@ class BaseModel:
             skip_special_tokens=True,
             stop=stop_token,
         )
+
+    @abstractmethod
+    def model_name(self) -> str:
+        """
+        Returns the model name
+        """
 
     def generate(
         self, system_prompt: str, messages: List[ChatCompletionRequestMessage]
