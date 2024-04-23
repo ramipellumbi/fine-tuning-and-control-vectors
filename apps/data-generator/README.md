@@ -11,7 +11,7 @@ OPENAI_API_KEY=FILL_IN
 OPUS_API_KEY=FILL_IN
 ```
 
-in the root of this application.
+in the [`src/`](./src) directory.
 
 Ensure you have `pnpm` installed. Install packages for the application by running
 
