@@ -1,7 +1,11 @@
 # Running the Streamer
 
-1. Install all the packages in `requirements.txt`. Pay attention to how you install [llama-cpp-python](https://github.com/abetlen/llama-cpp-python).
-2. Execute `streamlit run main.py` from the command line.
+1. Install all the packages in `requirements.txt`. Pay attention to how you install [llama-cpp-python](https://github.com/abetlen/llama-cpp-python). E.g., for acceleration on metal (Mac gpus):
+```
+pip install llama-cpp-python \
+  --extra-index-url https://abetlen.github.io/llama-cpp-python/whl/metal
+```
+3. Execute `streamlit run main.py` from the command line.
 
 # Example Adversarial Query
 
