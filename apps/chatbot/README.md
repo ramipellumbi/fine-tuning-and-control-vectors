@@ -1,6 +1,6 @@
 # Running the Streamer
 
-1. Install all the packages in `requirements.txt`.
+1. Install all the packages in `requirements.txt`. Pay attention to how you install [llama-cpp-python](https://github.com/abetlen/llama-cpp-python).
 2. (Optional, necessary for LLAMA 3 Support) Modify the `llama-cpp-python` installation to have the changes specified in [this PR](https://github.com/abetlen/llama-cpp-python/pull/1371).
 3. Run `streamlit main.py`.
 
