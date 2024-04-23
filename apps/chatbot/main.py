@@ -1,8 +1,9 @@
 import os
 import sys
 from enum import Enum
-from typing import Optional
+from typing import List, Optional
 
+from llama_cpp import ChatCompletionRequestMessage
 import streamlit as st
 
 from conversation import conversation
@@ -55,13 +56,15 @@ with st.container():
 model = get_model_from_options(model, model_type)
 
 if "messages" not in st.session_state.keys():
-    st.session_state.messages = [
+    initial_messages: List[ChatCompletionRequestMessage] = [
         {"role": "assistant", "content": "Hello! How can I help you today?"}
     ]
+    st.session_state.messages = initial_messages
 
 if prompt := st.chat_input("Your query", key="user_input"):
-    st.session_state.messages.append({"role": "user", "content": prompt})
-    conversation.add_message({"role": "user", "content": prompt})
+    new_user_msg: ChatCompletionRequestMessage = {"role": "user", "content": prompt}
+    st.session_state.messages.append(new_user_msg)
+    conversation.add_message(new_user_msg)
 
 for message in st.session_state.messages:
     with st.chat_message(message["role"]):
@@ -74,7 +77,9 @@ if st.session_state.messages[-1]["role"] != "assistant":
 
         stream = model.generate(system_prompt, messages)
         response = st.write_stream(stream)
-        st.session_state.messages.append(
-            {"role": "assistant", "content": str(response)}
-        )
-        conversation.add_message({"role": "assistant", "content": str(response)})
+        new_assistant_message: ChatCompletionRequestMessage = {
+            "role": "assistant",
+            "content": str(response),
+        }
+        st.session_state.messages.append(new_assistant_message)
+        conversation.add_message(new_assistant_message)
