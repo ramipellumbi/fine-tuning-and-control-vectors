@@ -10,16 +10,14 @@ from huggingface_hub import hf_hub_download
 
 class BaseModel:
     def __init__(self, **kwargs):
-        if "model_path" not in kwargs:
-            raise ValueError("model_path is required")
-        if "repo_id" not in kwargs:
-            raise ValueError("repo_id is required")
-        if "model_file_name" not in kwargs:
-            raise ValueError("model_file_name is required")
-        if "stop_token" not in kwargs:
-            raise ValueError("stop_token is required")
-        if "chat_format" not in kwargs:
-            raise ValueError("chat_format is required")
+        assert "model_path" in kwargs, "model_path is required"
+        assert "chat_format" in kwargs, "chat_format is required"
+        assert "repo_id" in kwargs, "repo_id is required"
+        assert "model_file_name" in kwargs, "model_file_name is required"
+        assert "stop_token" in kwargs, "stop_token is required"
+
+        stop_token = kwargs["stop_token"]
+        assert isinstance(stop_token, List), "stop_token must be a list of strings"
 
         chat_format = kwargs["chat_format"]
         assert chat_format in [
@@ -28,7 +26,6 @@ class BaseModel:
         ], "chat_format must be one of 'mistral-instruct' or 'llama-3'"
 
         model_path = kwargs["model_path"]
-
         if model_path is None:
             repo_id = kwargs["repo_id"]
             model_file_name = kwargs["model_file_name"]
@@ -43,8 +40,6 @@ class BaseModel:
             model_path = hf_hub_download(
                 repo_id=repo_id, filename=model_file_name, repo_type="model"
             )
-
-        stop_token = kwargs["stop_token"]
 
         self._llm = Llama(
             model_path=model_path,
@@ -73,9 +68,7 @@ class BaseModel:
             messages=messages_with_system_prompt,
             stream=True,
         )
-
-        if not isinstance(completion, Iterable):
-            raise ValueError("Completion is not iterable")
+        assert isinstance(completion, Iterable), "Completion is not iterable"
 
         for chunk in completion:
             assert isinstance(chunk, Dict)

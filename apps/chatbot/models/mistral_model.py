@@ -6,6 +6,7 @@ from models.base_model import BaseModel
 class MistralModel(BaseModel):
     def __init__(self, model_path: Optional[str]):
         kwargs = {}
+
         kwargs["model_path"] = model_path
         kwargs["chat_format"] = "mistral-instruct"
         kwargs["repo_id"] = "TheBloke/Mistral-7B-Instruct-v0.1-GGUF"

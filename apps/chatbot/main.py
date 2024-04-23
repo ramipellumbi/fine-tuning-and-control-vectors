@@ -37,8 +37,9 @@ with st.container():
             format_func=lambda x: Models[x].value,
             help="Select the model to use.",
         )
-        if not model_name:
-            raise ValueError("Model option must be provided.")
+        assert (
+            model_name is not None and model_name in Models.__members__
+        ), f"Model {model_name} not supported."
         model = Models[model_name]
 
     with col3:
@@ -48,8 +49,7 @@ with st.container():
             format_func=lambda x: ModelTypes[x].value,
             help="Select the model type to use.",
         )
-        if not model_type_name:
-            raise ValueError("Model type must be provided.")
+        assert model_type_name is not None and model_type_name in ModelTypes.__members__
         model_type = ModelTypes[model_type_name]
 
 model = get_model_from_options(model, model_type)
