@@ -1,7 +1,7 @@
 # Running the Streamer
 
 1. Install all the packages in `requirements.txt`. Pay attention to how you install [llama-cpp-python](https://github.com/abetlen/llama-cpp-python).
-2. Run `streamlit main.py`.
+2. Execute `streamlit run main.py` from the command line.
 
 # Example Adversarial Query
 
