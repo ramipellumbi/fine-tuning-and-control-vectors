@@ -5,6 +5,7 @@ This notebook evaluates the safety of fine-tuning data by using GPT-3.5 and GPT-
 ## Dependencies
 
 The notebook requires the following dependencies:
+
 - `transformers`
 - `torch`
 - `openai`
