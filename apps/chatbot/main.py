@@ -43,15 +43,20 @@ with st.container():
         ), f"Model {model_name} not supported."
         model = Models[model_name]
 
-    with col3:
-        model_type_name = st.radio(
-            label="Model Type",
-            options=[opt.name for opt in ModelTypes],
-            format_func=lambda x: ModelTypes[x].value,
-            help="Select the model type to use.",
-        )
-        assert model_type_name is not None and model_type_name in ModelTypes.__members__
-        model_type = ModelTypes[model_type_name]
+    model_type = None
+    if model != Models.LLAMA:
+        with col3:
+            model_type_name = st.radio(
+                label="Model Type",
+                options=[opt.name for opt in ModelTypes],
+                format_func=lambda x: ModelTypes[x].value,
+                help="Select the model type to use.",
+            )
+            assert (
+                model_type_name is not None
+                and model_type_name in ModelTypes.__members__
+            )
+            model_type = ModelTypes[model_type_name]
 
 model = get_model_from_options(model, model_type)
 
