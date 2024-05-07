@@ -21,6 +21,8 @@ pip install accelerate openai
 
 ## Usage
 
+This notebook should be run in Colab ONLY.
+
 1. Make sure you have the required dependencies installed and set your `HF_TOKEN` and `OPENAI_API_KEY` as Colab secrets.
 
 2. Set the `RUN_SAFETY_CHECKS` variable to `True` if you want to perform safety checks on the fine-tuning data.
