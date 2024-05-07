@@ -16,10 +16,12 @@ The notebook requires the following dependencies:
 You can install the necessary packages by running:
 
 ```bash
-pip install accelerate openai
+pip install accelerate==0.21.0 openai==1.25.0 pandas==2.2.1
 ```
 
 ## Usage
+
+This notebook should be run in Colab ONLY.
 
 1. Make sure you have the required dependencies installed and set your `HF_TOKEN` and `OPENAI_API_KEY` as Colab secrets.
 

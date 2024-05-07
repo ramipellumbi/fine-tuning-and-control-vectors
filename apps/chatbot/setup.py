@@ -5,7 +5,7 @@ from models import ModelFactory
 
 
 def get_model_path_from_option(
-    model_options: Models, option: ModelTypes
+    model_options: Models, option: Optional[ModelTypes]
 ) -> Optional[str]:
     # We never fine tuned or control vectored LLAMA
     if model_options == Models.LLAMA:
@@ -24,7 +24,7 @@ def get_model_path_from_option(
         return None
 
 
-def get_model_from_options(model_option: Models, path_option: ModelTypes):
+def get_model_from_options(model_option: Models, path_option: Optional[ModelTypes]):
     model_path = get_model_path_from_option(model_option, path_option)
     model = ModelFactory.create_model(model_option, model_path)
 

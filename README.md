@@ -8,15 +8,15 @@ The project has the following applications located in the [`apps/`](./apps) dire
 - [Evaluation](./apps/evaluation): A jupyter notebook to evaluate the safety of generated fine-tuning data or model-generated completions. The output of the notebook will be csv files containing the evaluated responses, marked as safe or unsafe, and with explanations for each.
 - [Fine Tuning](./apps/fine-tuning): A jupyter notebook to fine-tune Mistral-7B. The output of the notebook will be a fine-tuned `hf` model -- which will need to be converted to `gguf` for interaction with the `Chat Bot`.
 
-# Project High Level Overview
+## Project High Level Overview
 
-## Dependencies
+### Dependencies
 
-### Python
+#### Python
 
 Dependencies for all **Python** applications are encapsulated in [spec-file.yml](./spec-file.yml). Each individual Python application README.md file also specifies the subset of dependencies necessary for just that application. When the application is a notebook, the necessary install commands are included at the top of the notebook for completion.
 
-### Typescript
+#### Typescript
 
 The **Typescript** application has its dependencies specified in the application's [package.json](./apps/data-generator/package.json).
 

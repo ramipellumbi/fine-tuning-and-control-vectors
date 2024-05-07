@@ -5,6 +5,7 @@ This notebook performs fine-tuning on Mistral-7B-Instruct-v0.1 using data pulled
 ## Dependencies
 
 The notebook requires the following dependencies:
+
 - `transformers`
 - `torch`
 - `datasets`
@@ -21,15 +22,17 @@ pip install -q accelerate==0.21.0 peft==0.4.0 bitsandbytes==0.41.1 transformers=
 
 ## Usage
 
+This notebook should be run on Colab ONLY.
+
 1. Make sure you have the required dependencies installed and set your `HF_TOKEN` as a Colab secret.
 
 2. Run the notebook cells in order.
 
 3. The notebook will download the fine-tuning data from the specified GitHub repository and save it locally.
 
-5. The notebook will perform the fine-tuning and save the updated model locally.
+4. The notebook will perform the fine-tuning and save the updated model locally.
 
-6. You can review the updated model in the generated files (mistral-7b-fine-tuned).
+5. You can review the updated model in the generated files (mistral-7b-fine-tuned).
 
 ## Workflow
 
