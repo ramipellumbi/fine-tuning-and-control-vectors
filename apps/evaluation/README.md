@@ -16,7 +16,7 @@ The notebook requires the following dependencies:
 You can install the necessary packages by running:
 
 ```bash
-pip install accelerate openai
+pip install accelerate==0.21.0 openai==1.25.0 pandas==2.2.1
 ```
 
 ## Usage
