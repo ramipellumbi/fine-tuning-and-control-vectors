@@ -6,7 +6,7 @@ This application generates fine tuning samples using OpenAI, Anthropic, or both.
 
 Create a `.env` file with the environment variables
 
-```
+```bash
 OPENAI_API_KEY=FILL_IN
 OPUS_API_KEY=FILL_IN
 ```
@@ -15,13 +15,13 @@ in the [`src/`](./src) directory.
 
 Ensure you have `pnpm` installed. Install packages for the application by running
 
-```
+```bash
 pnpm install
 ```
 
 inside the `data-generator/` (this) directory. You can run the generation script by executing
 
-```
+```bash
 ts-node index.ts
 ```
 
@@ -39,7 +39,7 @@ The magic happens in [`validate.ts`](./src/validate.ts), which provides means fo
 
 Here is example usage:
 
-```
+```typescript
 const ValidSampleSchema = Type.Object({
   prompt: Type.String(),
   completion: Type.String(),
