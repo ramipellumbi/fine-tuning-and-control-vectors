@@ -36,7 +36,7 @@ conda activate nlp
 
 ### Base Model
 
-To simply run the base model, one can install the Python packages necessary for the [Chat Bot](./apps/chatbot/requirements.txt) (unnecessary if the above environment was created). We make use of [llama-cpp](https://github.com/ggerganov/llama.cpp), and particularly, [llama-cpp-python](https://github.com/abetlen/llama-cpp-python), to load `.gguf` models. To run the chat bot, one can execute
+To simply run the base model, one can install the [Python packages necessary for the Chat Bot](./apps/chatbot/requirements.txt) (unnecessary if the above environment was created). We make use of [llama-cpp](https://github.com/ggerganov/llama.cpp), and particularly, [llama-cpp-python](https://github.com/abetlen/llama-cpp-python), to load `.gguf` models. To run the chat bot, one can execute
 
 ```bash
 streamlit run main.py
